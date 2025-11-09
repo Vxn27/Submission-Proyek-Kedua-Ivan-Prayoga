@@ -1,28 +1,15 @@
-// ============================================
-// SERVICE WORKER - Cache + Push Notification
-// ============================================
-
 const CACHE_NAME = 'peta-cache-v1';
 
-// ============================================
-// INSTALL
-// ============================================
 self.addEventListener('install', event => {
   console.log('[SW] Install event');
   self.skipWaiting();
 });
 
-// ============================================
-// ACTIVATE
-// ============================================
 self.addEventListener('activate', event => {
   console.log('[SW] Activate event');
   self.clients.claim();
 });
 
-// ============================================
-// FETCH - Cache First Strategy
-// ============================================
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') {
     return;
@@ -66,9 +53,6 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// ============================================
-// PUSH - Handle Push Notifications
-// ============================================
 self.addEventListener('push', event => {
   console.log('[Push] Push event received:', event);
 
@@ -103,9 +87,6 @@ self.addEventListener('push', event => {
   );
 });
 
-// ============================================
-// NOTIFICATION CLICK
-// ============================================
 self.addEventListener('notificationclick', event => {
   console.log('[Notification] Clicked:', event.notification.title);
   event.notification.close();

@@ -1,7 +1,3 @@
-// ============================================
-// INDEXEDDB INITIALIZATION
-// ============================================
-
 let db;
 
 export function initIndexedDB() {
@@ -35,9 +31,6 @@ export function initIndexedDB() {
   });
 }
 
-// ============================================
-// CREATE - Simpan Data ke IndexedDB
-// ============================================
 export function saveLocation(locationData) {
   return new Promise((resolve, reject) => {
     const transaction = db.transaction(['locations'], 'readwrite');
@@ -57,9 +50,6 @@ export function saveLocation(locationData) {
   });
 }
 
-// ============================================
-// READ - Baca Semua Data dari IndexedDB
-// ============================================
 export function getAllLocations() {
   return new Promise((resolve, reject) => {
     const transaction = db.transaction(['locations'], 'readonly');
@@ -78,9 +68,6 @@ export function getAllLocations() {
   });
 }
 
-// ============================================
-// DELETE - Hapus Data dari IndexedDB
-// ============================================
 export function deleteLocation(id) {
   return new Promise((resolve, reject) => {
     const transaction = db.transaction(['locations'], 'readwrite');

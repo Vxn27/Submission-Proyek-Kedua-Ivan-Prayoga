@@ -3,10 +3,6 @@ import 'leaflet/dist/leaflet.css';
 import App from './pages/app';
 import { initIndexedDB } from './db.js';
 
-// ============================================
-// PUSH NOTIFICATION - REQUEST PERMISSION
-// ============================================
-
 function requestNotificationPermission() {
   if ('Notification' in window) {
     console.log('[Notification] Permission status:', Notification.permission);
@@ -21,10 +17,6 @@ function requestNotificationPermission() {
     }
   }
 }
-
-// ============================================
-// APP START
-// ============================================
 
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('[App] Starting...');
