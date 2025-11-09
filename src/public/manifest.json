@@ -1,0 +1,12 @@
+{
+  "name": "Peta Dunia by Ivan",
+  "short_name": "Peta Dunia",
+  "description": "Aplikasi peta untuk menampilkan lokasi di seluruh dunia",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#2196F3",
+  "icons": []
+}
