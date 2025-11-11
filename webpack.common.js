@@ -42,7 +42,7 @@ module.exports = {
         {
           from: 'src/public/**/*',
           to: '[name][ext]',
-          globOptions: { ignore: ['**/sw.js'] }
+          // globOptions: { ignore: ['**/sw.js'] }
         }
       ],
     }),
