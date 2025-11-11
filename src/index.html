@@ -27,12 +27,12 @@
     </header>
 
     <main id="main-content" class="main-content"></main>
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js')
-          .then(reg => console.log('[SW] Registered:', reg))
-          .catch(err => console.error('[SW] Error:', err));
-      }
-    </script>
+      <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('[SW] Registered:', reg))
+            .catch(err => console.error('[SW] Error:', err));
+        }
+      </script>
   </body>
 </html>

@@ -1,5 +1,3 @@
-// src/scripts/pages/app.js
-
 import routes from '../routes/routes';
 import { getActiveRoute } from '../routes/url-parser';
 import Auth from '../utils/auth';
@@ -11,6 +9,7 @@ class App {
   #drawerButton = null;
   #navigationDrawer = null;
   #navigationList = null;
+  #currentRoute = null;
 
   constructor({
     navigationDrawer, drawerButton, content, navigationList,
@@ -68,13 +67,22 @@ class App {
   async _renderPage() {
     const url = getActiveRoute();
 
-    if (protectedRoutes.includes(url) && !Auth.isLoggedIn()) {
-      window.location.hash = '#/login';
+    // Jangan render kalau sudah render route yang sama
+    if (this.#currentRoute === url) {
       return;
     }
 
+    // Check protected routes
+    if (protectedRoutes.includes(url) && !Auth.isLoggedIn()) {
+      // Jangan trigger redirect di sini, biarkan hash change
+      this.#currentRoute = '/login';
+      return;
+    }
+
+    // Check login/register redirect
     if ((url === '/login' || url === '/register') && Auth.isLoggedIn()) {
-      window.location.hash = '#/';
+      // Jangan trigger redirect di sini
+      this.#currentRoute = '/';
       return;
     }
 
@@ -89,6 +97,8 @@ class App {
       this.#content.innerHTML = await page.render();
       await page.afterRender();
     }
+
+    this.#currentRoute = url;
   }
 
   async updateUI() {

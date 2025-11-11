@@ -5,16 +5,19 @@ export default class BookmarksPage {
   async render() {
     return `
       <div class="bookmarks-container">
-        <h2>Lokasi Favorit</h2>
+        <h1>Lokasi Favorit</h1>
 
         <!-- FORM TAMBAH DATA -->
+        <h2>Tambah Lokasi Baru</h2>
         <form id="add-location-form" class="add-form">
+          <label for="location-name">Nama Lokasi</label>
           <input 
             type="text" 
             id="location-name" 
             placeholder="Nama Lokasi" 
             required
           />
+          <label for="location-lat">Latitude</label>
           <input 
             type="number" 
             id="location-lat" 
@@ -22,6 +25,7 @@ export default class BookmarksPage {
             step="0.0001" 
             required
           />
+          <label for="location-lon">Longitude</label>
           <input 
             type="number" 
             id="location-lon" 
@@ -33,6 +37,7 @@ export default class BookmarksPage {
         </form>
 
         <!-- LIST DATA -->
+        <h2>Daftar Lokasi</h2>
         <div id="locations-list" class="locations-list"></div>
       </div>
     `;
@@ -49,11 +54,26 @@ export default class BookmarksPage {
     await this.displayLocations();
   }
 
+  async sendPushNotification(locationName) {
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      registration.showNotification('Lokasi Favorit Ditambahkan', {
+        body: `Anda telah menambahkan lokasi baru: ${locationName}`
+      });
+      console.log('[Push] Local notification displayed');
+    } catch (error) {
+      console.error('[Push] Error showing local notification:', error);
+    }
+  }
+
+
   async handleAddLocation(e) {
     e.preventDefault();
 
+    const locationName = document.getElementById('location-name').value;
+    
     const locationData = {
-      name: document.getElementById('location-name').value,
+      name: locationName,
       latitude: parseFloat(document.getElementById('location-lat').value),
       longitude: parseFloat(document.getElementById('location-lon').value),
       timestamp: new Date().toISOString()
@@ -68,6 +88,9 @@ export default class BookmarksPage {
       
       // Reload list
       await this.displayLocations();
+      
+      // Send push notification to Dicoding API
+      await this.sendPushNotification(locationName);
       
       alert('Lokasi berhasil disimpan!');
     } catch (error) {
@@ -123,4 +146,3 @@ export default class BookmarksPage {
     }
   }
 }
-

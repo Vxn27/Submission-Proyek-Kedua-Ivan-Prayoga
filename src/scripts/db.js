@@ -25,28 +25,30 @@ export function initIndexedDB() {
           autoIncrement: true 
         });
         objectStore.createIndex('name', 'name', { unique: false });
-        console.log('[IndexedDB] Object store created');
+        console.log('[IndexedDB] Object store "locations" created');
+      }
+
+      // Buat object store untuk data cerita (stories)
+      if (!db.objectStoreNames.contains('stories')) {
+        const storyStore = db.createObjectStore('stories', { keyPath: 'id' });
+        storyStore.createIndex('name', 'name', { unique: false });
+        console.log('[IndexedDB] Object store "stories" created');
       }
     };
   });
 }
 
+// ==========================
+// LOCATION FUNCTIONS
+// ==========================
 export function saveLocation(locationData) {
   return new Promise((resolve, reject) => {
     const transaction = db.transaction(['locations'], 'readwrite');
     const store = transaction.objectStore('locations');
 
     const request = store.add(locationData);
-
-    request.onsuccess = () => {
-      console.log('[IndexedDB] Data saved with ID:', request.result);
-      resolve(request.result);
-    };
-
-    request.onerror = () => {
-      console.error('[IndexedDB] Error saving data');
-      reject(request.error);
-    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
   });
 }
 
@@ -56,15 +58,8 @@ export function getAllLocations() {
     const store = transaction.objectStore('locations');
     const request = store.getAll();
 
-    request.onsuccess = () => {
-      console.log('[IndexedDB] Data loaded:', request.result);
-      resolve(request.result);
-    };
-
-    request.onerror = () => {
-      console.error('[IndexedDB] Error loading data');
-      reject(request.error);
-    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
   });
 }
 
@@ -74,14 +69,54 @@ export function deleteLocation(id) {
     const store = transaction.objectStore('locations');
     const request = store.delete(id);
 
-    request.onsuccess = () => {
-      console.log('[IndexedDB] Data deleted with ID:', id);
-      resolve();
-    };
+    request.onsuccess = () => resolve();
+    request.onerror = () => reject(request.error);
+  });
+}
 
-    request.onerror = () => {
-      console.error('[IndexedDB] Error deleting data');
-      reject(request.error);
-    };
+// ==========================
+// STORY FUNCTIONS
+// ==========================
+export function saveStory(storyData) {
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(['stories'], 'readwrite');
+    const store = transaction.objectStore('stories');
+
+    const request = store.put(storyData); // pakai put agar update jika id sama
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+export function getStory(id) {
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(['stories'], 'readonly');
+    const store = transaction.objectStore('stories');
+    const request = store.get(id);
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+export function getAllStoriesFromDB() {
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(['stories'], 'readonly');
+    const store = transaction.objectStore('stories');
+    const request = store.getAll();
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+export function deleteStory(id) {
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(['stories'], 'readwrite');
+    const store = transaction.objectStore('stories');
+    const request = store.delete(id);
+
+    request.onsuccess = () => resolve();
+    request.onerror = () => reject(request.error);
   });
 }

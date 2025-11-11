@@ -173,6 +173,42 @@ header {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
 
+.story-item__buttons {
+  display: flex;
+  gap: 10px; /* jarak antar tombol */
+  padding: 0 18px 18px;
+}
+
+.story-item__buttons button {
+  flex: 1; /* tombol akan punya lebar sama */
+  padding: 8px 12px;
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.story-item__buttons button:hover {
+  background-color: var(--primary-hover);
+}
+
+/* Tombol Hapus berbeda warna */
+.story-item__buttons .delete-btn {
+  background-color: var(--error-color);
+}
+
+.story-item__buttons .delete-btn:hover {
+  background-color: #dc2626; /* lebih gelap saat hover */
+}
+
+/* Tombol yang belum aktif bisa di-hide */
+.story-item__buttons .hidden {
+  display: none; /* atau visibility: hidden */
+}
+
 .story-item img {
   width: 100%;
   height: 200px;
