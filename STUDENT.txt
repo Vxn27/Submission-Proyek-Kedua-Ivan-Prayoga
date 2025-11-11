@@ -1,2 +1,2 @@
-APP_URL=https://vxn27.github.io/Submission-Proyek-Kedua-Ivan-Prayoga
+APP_URL=https://vxn27.github.io/Submission-Proyek-Kedua-Ivan-Prayoga/#/
 MAP_SERVICE_API_KEY=<api_key>
