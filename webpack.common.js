@@ -39,11 +39,10 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        {
-          from: 'src/public/**/*',
-          to: '[name][ext]',
-          // globOptions: { ignore: ['**/sw.js'] }
-        }
+        // Salin semua dari src/public
+        { from: 'src/public/**/*', to: '[name][ext]' },
+        // Salin sw.js dari root project ke dist
+        { from: 'sw.js', to: 'sw.js' },
       ],
     }),
   ],
