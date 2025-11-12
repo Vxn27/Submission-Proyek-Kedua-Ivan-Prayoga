@@ -43,6 +43,7 @@ module.exports = {
         { from: 'src/public/**/*', to: '[name][ext]' },
         // Salin sw.js dari root project ke dist
         { from: 'sw.js', to: 'sw.js' },
+        { from: 'src/public/images', to: 'images' }
       ],
     }),
   ],

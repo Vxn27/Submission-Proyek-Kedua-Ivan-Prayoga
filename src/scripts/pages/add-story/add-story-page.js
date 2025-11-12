@@ -1,8 +1,8 @@
 import L from 'leaflet';
 import { addNewStory } from '../../data/api';
 import { showLoading, hideLoading } from '../../utils/common'; 
+
 export default class AddStoryPage {
-  // ... fungsi render() tidak berubah
   async render() {
     return `
       <section class="container">
@@ -55,12 +55,31 @@ export default class AddStoryPage {
       try {
         await addNewStory(formData);
         hideLoading();
+
+        // === Push Notification ===
+        const storyName = formData.get('description')?.slice(0, 30) || 'Story baru';
+        await this.sendPushNotification(`Story berhasil ditambahkan: ${storyName}`);
+
         alert('Story added successfully!');
         window.location.hash = '#/';
       } catch (error) {
         hideLoading();
-      errorMessageContainer.textContent = 'Error: ${error.message}';      
+        errorMessageContainer.textContent = `Error: ${error.message}`;
       }
     });
+  }
+
+  // ======================
+  // Notifikasi Web Push
+  // ======================
+  async sendPushNotification(message) {
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      registration.showNotification('Story Update', {
+        body: message,
+      });
+    } catch (error) {
+      console.error('[Push] Error showing notification:', error);
+    }
   }
 }
