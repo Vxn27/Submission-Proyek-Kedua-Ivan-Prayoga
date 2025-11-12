@@ -1,11 +1,13 @@
 {
   "name": "Peta Dunia",
   "short_name": "PetaDunia",
-  "start_url": ".",
-  "scope": "/",
+  "start_url": "/Submission-Proyek-Kedua-Ivan-Prayoga/",
+  "scope": "/Submission-Proyek-Kedua-Ivan-Prayoga/",
+  "id": "/Submission-Proyek-Kedua-Ivan-Prayoga/",
   "display": "standalone",
-  "background_color": "#ffffff",
   "theme_color": "#2196F3",
+  "background_color": "#ffffff",
+  "description": "Aplikasi Peta Dunia by Ivan",
   "icons": [
     {
       "src": "/images/icon.png",
